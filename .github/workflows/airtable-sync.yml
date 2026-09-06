@@ -11,12 +11,13 @@ name: Airtable senkronizasyonu
 
 on:
   schedule:
-    # Her 30 dakikada bir çalışır (UTC). GitHub, 60 günden uzun süre
+    # Her 5 dakikada bir çalışır (UTC). GitHub, 5 dakikadan kısa aralıkları
+    # garanti etmiyor (yoğunlukta atlanabiliyor). GitHub, 60 günden uzun süre
     # commit yapılmayan repolarda zamanlanmış (schedule) workflow'ları
     # otomatik olarak devre dışı bırakabilir — bu durumda Actions
     # sekmesinden "Enable workflow" ile tekrar açman yeterli.
-    - cron: '*/3 * * * *'
-  
+    - cron: '*/5 * * * *'
+
   workflow_dispatch: {}
     # Actions sekmesinden "Run workflow" butonuyla istediğin an elle
     # de tetikleyebilirsin (örn. yeni bir kaydı onayladıktan hemen sonra).
