@@ -103,74 +103,15 @@
   <!-- ==============================================================
        YAPISAL VERİ (JSON-LD) — GEO / SEO KRİTİK BÖLÜM
        Bu bloklar sayfada görünmez ama arama motorları ve yapay zeka
-       asistanları (örn. "Hamburg'da bu hafta sonu etkinlik var mı?"
-       diye soran bir kullanıcıya cevap üretirken) veriyi buradan okur.
-       Aşağıda örnek BİR etkinlik ve BİR işletim için mock veri var;
-       gerçek sistemde bu bloklar veritabanından dinamik üretilmeli.
+       asistanları veriyi buradan okur. ARTIK BURADA SABİT (mock) veri
+       YOK — Airtable'dan çekilen her etkinlik/işletme için sayfa JS'i
+       (bkz. body sonundaki <script>, buildEventJsonLd/buildBusinessJsonLd
+       fonksiyonları) bu blokları çalışma anında <head>'e ekliyor.
+       NOT: Bu, istemci tarafında (client-side) üretilir; Google/Bing gibi
+       JS çalıştıran botlar bunu okur, ama JS çalıştırmayan bazı basit
+       tarayıcılar okuyamaz. İleride bir "build adımı" (statik üretim)
+       eklenirse bu bloklar sayfa HTML'ine gönderilmeden önce gömülebilir.
        ============================================================== -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    "name": "Anadolu Ritimleri Canlı Müzik Gecesi",
-    "startDate": "2026-09-12T20:00:00+02:00",
-    "endDate": "2026-09-13T01:00:00+02:00",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "location": {
-      "@type": "Place",
-      "name": "Docks Hamburg",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Spielbudenplatz 19",
-        "addressLocality": "Hamburg",
-        "postalCode": "20359",
-        "addressCountry": "DE"
-      }
-    },
-    "image": ["https://www.bizimhamburg.de/images/etkinlik-canli-muzik.jpg"],
-    "description": "Anadolu Ritimleri grubundan canlı Türk müziği eşliğinde unutulmaz bir gece. Kapı açılışı 19:30.",
-    "offers": {
-      "@type": "Offer",
-      "url": "https://www.bizimhamburg.de/etkinlik/canli-muzik-gecesi",
-      "price": "15",
-      "priceCurrency": "EUR",
-      "availability": "https://schema.org/InStock",
-      "validFrom": "2026-08-01T00:00:00+02:00"
-    },
-    "performer": { "@type": "PerformingGroup", "name": "Anadolu Ritimleri" },
-    "organizer": { "@type": "Organization", "name": "Bizim Hamburg", "url": "https://www.bizimhamburg.de" }
-  }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "GroceryStore",
-    "name": "Bosphorus Türk Marketi",
-    "image": "https://www.bizimhamburg.de/images/bosphorus-market.jpg",
-    "telephone": "+49-40-1234567",
-    "priceRange": "€€",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Steindamm 45",
-      "addressLocality": "Hamburg",
-      "postalCode": "20099",
-      "addressCountry": "DE"
-    },
-    "geo": { "@type": "GeoCoordinates", "latitude": 53.5548, "longitude": 10.0089 },
-    "url": "https://www.bizimhamburg.de/isletme/bosphorus-turk-marketi",
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-        "opens": "08:00",
-        "closes": "21:00"
-      }
-    ],
-    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.7", "reviewCount": "128" }
-  }
-  </script>
 </head>
 
 <body class="text-brand-dark antialiased">
@@ -187,6 +128,7 @@
 
       <div class="hidden md:flex items-center gap-8 text-sm font-medium">
         <a href="#etkinlikler" class="hover:text-brand-red transition-colors">Etkinlikler</a>
+        <a href="#kampanyalar" class="hover:text-brand-red transition-colors">Kampanyalar</a>
         <a href="#isletmeler" class="hover:text-brand-red transition-colors">İşletmeler</a>
         <a href="#kategoriler" class="hover:text-brand-red transition-colors">Kategoriler</a>
         <a href="#topluluk" class="hover:text-brand-red transition-colors">Topluluk</a>
@@ -209,6 +151,7 @@
     <div id="mobile-menu" class="hidden md:hidden border-t border-black/5 bg-brand-cream px-4 pb-4">
       <div class="flex flex-col gap-1 pt-2 text-sm font-medium">
         <a href="#etkinlikler" class="py-2.5 border-b border-black/5">Etkinlikler</a>
+        <a href="#kampanyalar" class="py-2.5 border-b border-black/5">Kampanyalar</a>
         <a href="#isletmeler" class="py-2.5 border-b border-black/5">İşletmeler</a>
         <a href="#kategoriler" class="py-2.5 border-b border-black/5">Kategoriler</a>
         <a href="#topluluk" class="py-2.5 border-b border-black/5">Topluluk</a>
@@ -291,106 +234,52 @@
           <a href="#" class="hidden sm:inline text-brand-red font-semibold text-sm hover:underline whitespace-nowrap">Tümünü Gör →</a>
         </div>
 
-        <div class="scroll-row flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory">
-
-          <!-- Etkinlik Kartı 1 -->
-          <article data-filterable data-category="hafta-sonu" data-search="anadolu ritimleri canlı müzik gecesi docks reeperbahn"
-                    class="lift-card snap-start shrink-0 w-72 sm:w-80 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5">
-            <div class="relative h-40 placeholder-img" style="background-image:linear-gradient(135deg,#E63946,#7b1e27)">
-              🎤
-              <span class="absolute top-3 left-3 bg-white rounded-lg px-2.5 py-1 text-center leading-tight shadow">
-                <span class="block text-brand-red font-heading font-extrabold text-sm">12</span>
-                <span class="block text-[10px] uppercase text-brand-dark/60 -mt-0.5">Eyl</span>
-              </span>
-              <span class="absolute top-3 right-3 bg-brand-dark/80 text-white text-[11px] font-semibold px-2 py-1 rounded-full">Konser</span>
-            </div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">Anadolu Ritimleri Canlı Müzik Gecesi</h3>
-              <p class="mt-1.5 flex items-center gap-1.5 text-xs text-brand-dark/60">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Docks Hamburg · St. Pauli
-              </p>
-              <div class="mt-4 flex items-center justify-between">
-                <span class="text-sm font-semibold text-brand-teal">15 €</span>
-                <a href="#" class="text-xs font-semibold bg-brand-dark text-white px-3 py-2 rounded-full hover:bg-black">Bilet Al</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Etkinlik Kartı 2 -->
-          <article data-filterable data-category="hafta-sonu" data-search="türk tiyatrosu sahne performansı komedi"
-                    class="lift-card snap-start shrink-0 w-72 sm:w-80 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5">
-            <div class="relative h-40 placeholder-img" style="background-image:linear-gradient(135deg,#2A9D8F,#134e48)">
-              🎭
-              <span class="absolute top-3 left-3 bg-white rounded-lg px-2.5 py-1 text-center leading-tight shadow">
-                <span class="block text-brand-red font-heading font-extrabold text-sm">14</span>
-                <span class="block text-[10px] uppercase text-brand-dark/60 -mt-0.5">Eyl</span>
-              </span>
-              <span class="absolute top-3 right-3 bg-brand-dark/80 text-white text-[11px] font-semibold px-2 py-1 rounded-full">Tiyatro</span>
-            </div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">"Gurbetçi" — Komedi Tiyatro Oyunu</h3>
-              <p class="mt-1.5 flex items-center gap-1.5 text-xs text-brand-dark/60">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Kulturhaus Eppendorf
-              </p>
-              <div class="mt-4 flex items-center justify-between">
-                <span class="text-sm font-semibold text-brand-teal">18 €</span>
-                <a href="#" class="text-xs font-semibold bg-brand-dark text-white px-3 py-2 rounded-full hover:bg-black">Bilet Al</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Etkinlik Kartı 3 -->
-          <article data-filterable data-category="hafta-sonu" data-search="girişimci networking buluşması iş dünyası"
-                    class="lift-card snap-start shrink-0 w-72 sm:w-80 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5">
-            <div class="relative h-40 placeholder-img" style="background-image:linear-gradient(135deg,#F4A300,#8a5a00)">
-              🤝
-              <span class="absolute top-3 left-3 bg-white rounded-lg px-2.5 py-1 text-center leading-tight shadow">
-                <span class="block text-brand-red font-heading font-extrabold text-sm">19</span>
-                <span class="block text-[10px] uppercase text-brand-dark/60 -mt-0.5">Eyl</span>
-              </span>
-              <span class="absolute top-3 right-3 bg-brand-dark/80 text-white text-[11px] font-semibold px-2 py-1 rounded-full">Networking</span>
-            </div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">Genç Girişimciler Buluşması</h3>
-              <p class="mt-1.5 flex items-center gap-1.5 text-xs text-brand-dark/60">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                WorkHub Altona
-              </p>
-              <div class="mt-4 flex items-center justify-between">
-                <span class="text-sm font-semibold text-brand-teal">Ücretsiz</span>
-                <a href="#" class="text-xs font-semibold bg-brand-dark text-white px-3 py-2 rounded-full hover:bg-black">Detay Gör</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Etkinlik Kartı 4 -->
-          <article data-filterable data-category="hafta-sonu" data-search="türk panayırı festival aile çocuk etkinliği"
-                    class="lift-card snap-start shrink-0 w-72 sm:w-80 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5">
-            <div class="relative h-40 placeholder-img" style="background-image:linear-gradient(135deg,#7b1e27,#E63946)">
-              🎪
-              <span class="absolute top-3 left-3 bg-white rounded-lg px-2.5 py-1 text-center leading-tight shadow">
-                <span class="block text-brand-red font-heading font-extrabold text-sm">27</span>
-                <span class="block text-[10px] uppercase text-brand-dark/60 -mt-0.5">Eyl</span>
-              </span>
-              <span class="absolute top-3 right-3 bg-brand-dark/80 text-white text-[11px] font-semibold px-2 py-1 rounded-full">Festival</span>
-            </div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">Bizim Hamburg Kültür Panayırı</h3>
-              <p class="mt-1.5 flex items-center gap-1.5 text-xs text-brand-dark/60">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Planten un Blomen
-              </p>
-              <div class="mt-4 flex items-center justify-between">
-                <span class="text-sm font-semibold text-brand-teal">Ücretsiz</span>
-                <a href="#" class="text-xs font-semibold bg-brand-dark text-white px-3 py-2 rounded-full hover:bg-black">Detay Gör</a>
-              </div>
-            </div>
-          </article>
-
+        <!-- Bu konteyner artık statik kart içermiyor: veriler Airtable'daki
+             "Etkinlikler" tablosundan sayfa yüklenirken JS ile çekilip
+             buraya render ediliyor (bkz. body sonundaki <script>, loadEvents()). -->
+        <div id="events-container" class="scroll-row flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory">
+          <div class="shrink-0 w-72 sm:w-80 h-64 rounded-2xl bg-black/5 animate-pulse"></div>
+          <div class="shrink-0 w-72 sm:w-80 h-64 rounded-2xl bg-black/5 animate-pulse"></div>
+          <div class="shrink-0 w-72 sm:w-80 h-64 rounded-2xl bg-black/5 animate-pulse"></div>
         </div>
+        <p id="events-error" class="hidden text-center text-sm text-brand-red mt-4">
+          Etkinlikler şu anda yüklenemedi. Lütfen sayfayı yenile veya birazdan tekrar dene.
+        </p>
+        <p id="events-empty" class="hidden text-center text-sm text-brand-dark/50 mt-4">Şu anda yaklaşan etkinlik yok. Yakında yenileri eklenecek!</p>
         <a href="#" class="sm:hidden mt-4 inline-block text-brand-red font-semibold text-sm hover:underline">Tümünü Gör →</a>
+      </div>
+    </section>
+
+    <!-- ==============================================================
+         KAMPANYALAR & İNDİRİMLER
+         İşletmelerin (şu an için Premium/Sponsorlu üyelerin) haftalık
+         kampanya, indirim ve prospektüslerini paylaştığı bölüm. Süresi
+         geçen kampanyalar Airtable'daki BitisTarihi'ne göre otomatik
+         gizlenir — elle silmen gerekmez. Bu, ziyaretçinin siteyi
+         "haftada bir kontrol ettiği" bir alışkanlığa dönüştürerek en
+         güçlü geri dönüş (retention) motorlarından biri olması için
+         tasarlandı; aynı zamanda Premium üyeliğin somut bir faydası.
+         ============================================================== -->
+    <section id="kampanyalar" class="py-14 sm:py-20 bg-brand-cream">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between mb-6">
+          <div>
+            <h2 class="font-heading text-2xl sm:text-3xl font-bold">Kampanyalar &amp; İndirimler</h2>
+            <p class="text-brand-dark/60 mt-1 text-sm sm:text-base">Bu haftanın fırsatları ve prospektüsleri — kaçırma!</p>
+          </div>
+          <span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold bg-brand-gold/20 text-brand-dark px-3 py-1.5 rounded-full whitespace-nowrap">⭐ Premium işletmelere özel</span>
+        </div>
+
+        <!-- Veriler Airtable'daki "Kampanyalar" tablosundan çekiliyor (bkz. loadCampaigns()) -->
+        <div id="campaigns-container" class="scroll-row flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory">
+          <div class="shrink-0 w-72 sm:w-80 h-64 rounded-2xl bg-black/10 animate-pulse"></div>
+          <div class="shrink-0 w-72 sm:w-80 h-64 rounded-2xl bg-black/10 animate-pulse"></div>
+          <div class="shrink-0 w-72 sm:w-80 h-64 rounded-2xl bg-black/10 animate-pulse"></div>
+        </div>
+        <p id="campaigns-error" class="hidden text-center text-sm text-brand-red mt-4">
+          Kampanyalar şu anda yüklenemedi. Lütfen sayfayı yenile veya birazdan tekrar dene.
+        </p>
+        <p id="campaigns-empty" class="hidden text-center text-sm text-brand-dark/50 mt-4">Şu anda aktif bir kampanya yok. Yakında yenileri eklenecek!</p>
       </div>
     </section>
 
@@ -420,146 +309,23 @@
           <button type="button" data-biz-filter="fotografci" class="filter-pill border border-brand-dark/15 text-xs sm:text-sm font-medium px-4 py-2 rounded-full">📸 Fotoğrafçılar</button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          <!-- İşletme Kartı 1: Market (sponsorlu) -->
-          <article data-filterable data-bizcategory="market" data-search="bosphorus türk marketi steindamm bakkal şarküteri"
-                    class="lift-card bg-brand-cream rounded-2xl overflow-hidden border border-black/5 relative">
-            <span class="absolute top-3 left-3 z-10 bg-brand-gold text-brand-dark text-[11px] font-bold px-2.5 py-1 rounded-full shadow">⭐ Sponsorlu</span>
-            <div class="h-36 placeholder-img" style="background-image:linear-gradient(135deg,#2A9D8F,#134e48)">🛒</div>
-            <div class="p-4">
-              <div class="flex items-start justify-between gap-2">
-                <h3 class="font-heading font-bold text-base leading-snug">Bosphorus Türk Marketi</h3>
-              </div>
-              <div class="mt-1 flex items-center gap-1 text-brand-gold text-sm" aria-label="4,7 üzerinden 5 yıldız, 128 değerlendirme">
-                <span aria-hidden="true">★★★★★</span>
-                <span class="text-brand-dark/60 text-xs font-medium ml-1">4.7 (128 yorum)</span>
-              </div>
-              <p class="mt-2 text-xs text-brand-dark/60 flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Steindamm 45, 20099 Hamburg
-              </p>
-              <div class="mt-4 flex gap-2">
-                <!-- TODO: Google Places API bağlandığında bu link canlı koordinatla güncellenecek -->
-                <a href="https://www.google.com/maps/search/?api=1&query=Bosphorus+T%C3%BCrk+Marketi+Steindamm+45+Hamburg" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold border border-brand-dark/15 px-3 py-2.5 rounded-full hover:bg-brand-dark hover:text-white transition-colors">📍 Haritada Gör</a>
-                <a href="tel:+49401234567" class="flex-1 text-center text-xs font-semibold bg-brand-dark text-white px-3 py-2.5 rounded-full hover:bg-black transition-colors">📞 Ara</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- İşletme Kartı 2: Düğün Salonu -->
-          <article data-filterable data-bizcategory="dugun" data-search="saray düğün salonu wandsbek nikah davet"
-                    class="lift-card bg-brand-cream rounded-2xl overflow-hidden border border-black/5 relative">
-            <span class="absolute top-3 left-3 z-10 bg-white text-brand-teal text-[11px] font-bold px-2.5 py-1 rounded-full shadow">✓ Doğrulanmış</span>
-            <div class="h-36 placeholder-img" style="background-image:linear-gradient(135deg,#E63946,#7b1e27)">💍</div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">Saray Düğün Salonu</h3>
-              <div class="mt-1 flex items-center gap-1 text-brand-gold text-sm" aria-label="4,9 üzerinden 5 yıldız, 86 değerlendirme">
-                <span aria-hidden="true">★★★★★</span>
-                <span class="text-brand-dark/60 text-xs font-medium ml-1">4.9 (86 yorum)</span>
-              </div>
-              <p class="mt-2 text-xs text-brand-dark/60 flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Wandsbeker Chaussee 112
-              </p>
-              <div class="mt-4 flex gap-2">
-                <a href="https://www.google.com/maps/search/?api=1&query=Saray+D%C3%BC%C4%9F%C3%BCn+Salonu+Hamburg" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold border border-brand-dark/15 px-3 py-2.5 rounded-full hover:bg-brand-dark hover:text-white transition-colors">📍 Haritada Gör</a>
-                <!-- Randevu/teklif talepleri için WhatsApp — telefon trafiğini azaltır, işletme sahibinin zamanını korur -->
-                <a href="https://wa.me/49409998877" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold bg-[#25D366] text-white px-3 py-2.5 rounded-full hover:opacity-90 transition-opacity">💬 WhatsApp</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- İşletme Kartı 3: Restoran -->
-          <article data-filterable data-bizcategory="restoran" data-search="lezzet durağı restoran ocakbaşı kebap altona"
-                    class="lift-card bg-brand-cream rounded-2xl overflow-hidden border border-black/5 relative">
-            <div class="h-36 placeholder-img" style="background-image:linear-gradient(135deg,#F4A300,#8a5a00)">🍽️</div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">Lezzet Durağı Ocakbaşı</h3>
-              <div class="mt-1 flex items-center gap-1 text-brand-gold text-sm" aria-label="4,5 üzerinden 5 yıldız, 214 değerlendirme">
-                <span aria-hidden="true">★★★★★</span>
-                <span class="text-brand-dark/60 text-xs font-medium ml-1">4.5 (214 yorum)</span>
-              </div>
-              <p class="mt-2 text-xs text-brand-dark/60 flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Große Bergstraße 78, Altona
-              </p>
-              <div class="mt-4 flex gap-2">
-                <a href="https://www.google.com/maps/search/?api=1&query=Lezzet+Dura%C4%9F%C4%B1+Ocakba%C5%9F%C4%B1+Hamburg" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold border border-brand-dark/15 px-3 py-2.5 rounded-full hover:bg-brand-dark hover:text-white transition-colors">📍 Haritada Gör</a>
-                <a href="tel:+49407654321" class="flex-1 text-center text-xs font-semibold bg-brand-dark text-white px-3 py-2.5 rounded-full hover:bg-black transition-colors">📞 Rezervasyon</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- İşletme Kartı 4: Doktor/Klinik -->
-          <article data-filterable data-bizcategory="doktor" data-search="dr yılmaz diş kliniği ağız sağlığı eimsbüttel"
-                    class="lift-card bg-brand-cream rounded-2xl overflow-hidden border border-black/5 relative">
-            <div class="h-36 placeholder-img" style="background-image:linear-gradient(135deg,#134e48,#2A9D8F)">⚕️</div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">Dr. Yılmaz Diş Kliniği</h3>
-              <div class="mt-1 flex items-center gap-1 text-brand-gold text-sm" aria-label="4,8 üzerinden 5 yıldız, 97 değerlendirme">
-                <span aria-hidden="true">★★★★★</span>
-                <span class="text-brand-dark/60 text-xs font-medium ml-1">4.8 (97 yorum)</span>
-              </div>
-              <p class="mt-2 text-xs text-brand-dark/60 flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Osterstraße 23, Eimsbüttel
-              </p>
-              <div class="mt-4 flex gap-2">
-                <a href="https://www.google.com/maps/search/?api=1&query=Dr+Y%C4%B1lmaz+Di%C5%9F+Klini%C4%9Fi+Hamburg" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold border border-brand-dark/15 px-3 py-2.5 rounded-full hover:bg-brand-dark hover:text-white transition-colors">📍 Haritada Gör</a>
-                <!-- TODO: Calendly/Doctolib entegrasyonu — online randevu linki buraya bağlanacak -->
-                <a href="#" class="flex-1 text-center text-xs font-semibold bg-brand-dark text-white px-3 py-2.5 rounded-full hover:bg-black transition-colors">🗓️ Randevu Al</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- İşletme Kartı 5: Fotoğrafçı -->
-          <article data-filterable data-bizcategory="fotografci" data-search="ayşe kaya fotoğraf stüdyosu düğün çekimi"
-                    class="lift-card bg-brand-cream rounded-2xl overflow-hidden border border-black/5 relative">
-            <span class="absolute top-3 left-3 z-10 bg-brand-gold text-brand-dark text-[11px] font-bold px-2.5 py-1 rounded-full shadow">⭐ Sponsorlu</span>
-            <div class="h-36 placeholder-img" style="background-image:linear-gradient(135deg,#7b1e27,#E63946)">📸</div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">Ayşe Kaya Fotoğraf Stüdyosu</h3>
-              <div class="mt-1 flex items-center gap-1 text-brand-gold text-sm" aria-label="5 üzerinden 5 yıldız, 63 değerlendirme">
-                <span aria-hidden="true">★★★★★</span>
-                <span class="text-brand-dark/60 text-xs font-medium ml-1">5.0 (63 yorum)</span>
-              </div>
-              <p class="mt-2 text-xs text-brand-dark/60 flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Mönckebergstraße 9, Zentrum
-              </p>
-              <div class="mt-4 flex gap-2">
-                <a href="https://www.google.com/maps/search/?api=1&query=Foto%C4%9Fraf+St%C3%BCdyosu+M%C3%B6nckebergstra%C3%9Fe+Hamburg" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold border border-brand-dark/15 px-3 py-2.5 rounded-full hover:bg-brand-dark hover:text-white transition-colors">📍 Haritada Gör</a>
-                <a href="https://wa.me/49405551122" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold bg-[#25D366] text-white px-3 py-2.5 rounded-full hover:opacity-90 transition-opacity">💬 WhatsApp</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- İşletme Kartı 6: Berber/Kuaför -->
-          <article data-filterable data-bizcategory="market" data-search="modern kuaför berber saç sakal tıraş"
-                    class="lift-card bg-brand-cream rounded-2xl overflow-hidden border border-black/5 relative">
-            <div class="h-36 placeholder-img" style="background-image:linear-gradient(135deg,#8a5a00,#F4A300)">💇</div>
-            <div class="p-4">
-              <h3 class="font-heading font-bold text-base leading-snug">Modern Kuaför &amp; Berber</h3>
-              <div class="mt-1 flex items-center gap-1 text-brand-gold text-sm" aria-label="4,6 üzerinden 5 yıldız, 152 değerlendirme">
-                <span aria-hidden="true">★★★★★</span>
-                <span class="text-brand-dark/60 text-xs font-medium ml-1">4.6 (152 yorum)</span>
-              </div>
-              <p class="mt-2 text-xs text-brand-dark/60 flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Billstraße 14, Rothenburgsort
-              </p>
-              <div class="mt-4 flex gap-2">
-                <a href="https://www.google.com/maps/search/?api=1&query=Modern+Kuaf%C3%B6r+Berber+Hamburg" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold border border-brand-dark/15 px-3 py-2.5 rounded-full hover:bg-brand-dark hover:text-white transition-colors">📍 Haritada Gör</a>
-                <!-- TODO: Calendly/Treatwell entegrasyonu — randevu linki buraya bağlanacak -->
-                <a href="#" class="flex-1 text-center text-xs font-semibold bg-brand-dark text-white px-3 py-2.5 rounded-full hover:bg-black transition-colors">🗓️ Randevu Al</a>
-              </div>
-            </div>
-          </article>
-
+        <!-- Bu konteyner artık statik kart içermiyor: veriler Airtable'daki
+             "Isletmeler" tablosundan (yalnızca Durum="Onaylandı" olanlar)
+             sayfa yüklenirken JS ile çekilip render ediliyor
+             (bkz. body sonundaki <script>, loadBusinesses()). -->
+        <div id="businesses-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="h-64 rounded-2xl bg-black/5 animate-pulse"></div>
+          <div class="h-64 rounded-2xl bg-black/5 animate-pulse"></div>
+          <div class="h-64 rounded-2xl bg-black/5 animate-pulse"></div>
+          <div class="h-64 rounded-2xl bg-black/5 animate-pulse hidden sm:block"></div>
+          <div class="h-64 rounded-2xl bg-black/5 animate-pulse hidden lg:block"></div>
+          <div class="h-64 rounded-2xl bg-black/5 animate-pulse hidden lg:block"></div>
         </div>
 
         <p id="biz-empty" class="hidden text-center text-sm text-brand-dark/50 mt-8">Bu kategoride henüz işletme yok. Yakında eklenecek!</p>
+        <p id="biz-error" class="hidden text-center text-sm text-brand-red mt-8">
+          İşletmeler şu anda yüklenemedi. Lütfen sayfayı yenile veya birazdan tekrar dene.
+        </p>
       </div>
     </section>
 
@@ -615,10 +381,16 @@
             <li class="flex items-start gap-2"><span class="text-brand-teal mt-0.5">✓</span> WhatsApp / telefon üzerinden doğrudan müşteri talebi alın</li>
             <li class="flex items-start gap-2"><span class="text-brand-teal mt-0.5">✓</span> Yıldız puanı ve yorumlarla güven inşa edin</li>
             <li class="flex items-start gap-2"><span class="text-brand-teal mt-0.5">✓</span> Etkinliklerinizi topluluğun etkinlik takvimine ekleyin</li>
+            <li class="flex items-start gap-2"><span class="text-brand-gold mt-0.5">⭐</span> Premium: haftalık kampanya/indirim prospektüsünüzü doğrudan siteye koyun</li>
           </ul>
-          <a href="https://wa.me/4940000000" target="_blank" rel="noopener" class="mt-7 inline-flex items-center gap-2 bg-brand-red text-white font-semibold px-6 py-3.5 rounded-full hover:bg-red-600 transition-colors">
+          <!-- TODO (Airtable rehberinin 5. adımı): "PASTE_AIRTABLE_FORM_URL_HERE" yerine
+               Airtable'daki "Isletmeler" tablosunun paylaşılabilir Form linkini yapıştır.
+               Böylece işletme sahibi doldurduğunda kayıt otomatik "Beklemede" durumuyla
+               tabloya düşer, sen onaylayınca sitede görünür. -->
+          <a href="https://airtable.com/invite/l?inviteId=invOH4uwkQ7N6ix2q&inviteToken=f415d93999f1317e732be9abe7ceb10470bfd9ef655f3e24a664bd768851f3e1&utm_medium=email&utm_source=product_team&utm_content=transactional-alerts" target="_blank" rel="noopener" class="mt-7 inline-flex items-center gap-2 bg-brand-red text-white font-semibold px-6 py-3.5 rounded-full hover:bg-red-600 transition-colors">
             İşletmeni Ücretsiz Ekle →
           </a>
+          <p class="mt-3 text-xs text-white/50">Alternatif: <a href="https://wa.me/4940000000" target="_blank" rel="noopener" class="underline hover:text-white">WhatsApp'tan yaz</a>, biz senin adına ekleyelim.</p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
           <div class="flex items-center justify-between text-sm font-semibold pb-4 border-b border-white/10">
@@ -630,6 +402,7 @@
             <li class="flex justify-between"><span>Kategori listesinde üst sırada</span><span>— &nbsp;&nbsp; ✓</span></li>
             <li class="flex justify-between"><span>"Öne Çıkan" rozeti</span><span>— &nbsp;&nbsp; ✓</span></li>
             <li class="flex justify-between"><span>Etkinlik tanıtımı</span><span>— &nbsp;&nbsp; ✓</span></li>
+            <li class="flex justify-between"><span>Haftalık kampanya/prospektüs paylaşımı</span><span>— &nbsp;&nbsp; ✓</span></li>
           </ul>
         </div>
       </div>
@@ -684,6 +457,7 @@
         <h3 class="text-white font-semibold text-sm mb-3">Hızlı Linkler</h3>
         <ul class="space-y-2 text-sm">
           <li><a href="#etkinlikler" class="hover:text-white">Etkinlikler</a></li>
+          <li><a href="#kampanyalar" class="hover:text-white">Kampanyalar</a></li>
           <li><a href="#isletmeler" class="hover:text-white">İşletmeler</a></li>
           <li><a href="#kategoriler" class="hover:text-white">Kategoriler</a></li>
           <li><a href="#isletme-ekle" class="hover:text-white">İşletmeni Ekle</a></li>
@@ -717,6 +491,380 @@
   </footer>
 
   <script>
+    /* ==============================================================
+       VERİ KATMANI — AIRTABLE ENTEGRASYONU
+       Bu bölüm Airtable'daki "Isletmeler" ve "Etkinlikler" tablolarını
+       okuyup sayfaya render eder. Kurulum adımları için proje
+       klasöründeki "airtable-kurulum-rehberi.md" dosyasına bak.
+
+       ⚠️ GÜVENLİK NOTU: Aşağıya yapıştıracağın token SADECE OKUMA
+       izinli (read-only), SADECE bu tek base'e erişebilen bir
+       Personal Access Token olmalı. Bu site herkese açık statik bir
+       sayfa olduğu için, bu token sayfa kaynağını görebilen HERKES
+       tarafından görülebilir. Bu yüzden token'a asla "yazma" izni
+       verme ve Airtable base'inde bu tabloların DIŞINDA (örn. henüz
+       onaylanmamış hassas veri içeren ayrı bir tablo/base) hiçbir şey
+       tutma. Detaylar rehberin "Güvenlik" bölümünde.
+       ============================================================== */
+    const AIRTABLE_CONFIG = {
+      baseId: 'appAfKIZoMYuGSCLu',       // örn: 'appXXXXXXXXXXXXXX' — Airtable API dokümantasyon sayfasından alınır
+      token: 'PASTE_YOUR_READ_ONLY_TOKEN_HERE', // Personal Access Token — sadece data.records:read izniyle oluştur, ASLA gerçek token'ı commit'leme
+      tables: {
+        businesses: 'Isletmeler',
+        events: 'Etkinlikler',
+        campaigns: 'Kampanyalar'
+      }
+    };
+
+    // İşletme kategorisi → { filtre anahtarı, ikon, kart gradyanı, schema.org tipi }
+    // Airtable'daki "Kategori" tekli-seçim (single select) alanının değerleriyle BİREBİR eşleşmeli.
+    const BUSINESS_CATEGORY_MAP = {
+      'Market':          { key: 'market',      emoji: '🛒', gradient: 'linear-gradient(135deg,#2A9D8F,#134e48)', schemaType: 'GroceryStore' },
+      'Restoran':        { key: 'restoran',    emoji: '🍽️', gradient: 'linear-gradient(135deg,#F4A300,#8a5a00)', schemaType: 'Restaurant' },
+      'Düğün Salonu':    { key: 'dugun',       emoji: '💍', gradient: 'linear-gradient(135deg,#E63946,#7b1e27)', schemaType: 'EventVenue' },
+      'Doktor/Klinik':   { key: 'doktor',      emoji: '⚕️', gradient: 'linear-gradient(135deg,#134e48,#2A9D8F)', schemaType: 'MedicalBusiness' },
+      'Fotoğrafçı':      { key: 'fotografci',  emoji: '📸', gradient: 'linear-gradient(135deg,#7b1e27,#E63946)', schemaType: 'ProfessionalService' },
+      'Kuaför/Berber':   { key: 'kuafor',      emoji: '💇', gradient: 'linear-gradient(135deg,#8a5a00,#F4A300)', schemaType: 'HairSalon' },
+      'Avukat':          { key: 'avukat',      emoji: '⚖️', gradient: 'linear-gradient(135deg,#1B1B2F,#3d3d55)', schemaType: 'LegalService' },
+      'Emlak':           { key: 'emlak',       emoji: '🏠', gradient: 'linear-gradient(135deg,#2A9D8F,#1B1B2F)', schemaType: 'RealEstateAgent' }
+    };
+    const BUSINESS_CATEGORY_FALLBACK = { key: 'diger', emoji: '🏢', gradient: 'linear-gradient(135deg,#1B1B2F,#3d3d55)', schemaType: 'LocalBusiness' };
+
+    // Etkinlik kategorisi → { ikon, kart gradyanı }
+    const EVENT_CATEGORY_MAP = {
+      'Konser':      { emoji: '🎤', gradient: 'linear-gradient(135deg,#E63946,#7b1e27)' },
+      'Tiyatro':     { emoji: '🎭', gradient: 'linear-gradient(135deg,#2A9D8F,#134e48)' },
+      'Networking':  { emoji: '🤝', gradient: 'linear-gradient(135deg,#F4A300,#8a5a00)' },
+      'Festival':    { emoji: '🎪', gradient: 'linear-gradient(135deg,#7b1e27,#E63946)' }
+    };
+    const EVENT_CATEGORY_FALLBACK = { emoji: '🎈', gradient: 'linear-gradient(135deg,#1B1B2F,#3d3d55)' };
+
+    // Kampanya kartları için ikon/gradyan — işletme kategorisiyle aynı görsel dile
+    // sahip olsun diye BUSINESS_CATEGORY_MAP'i yeniden kullanıyoruz.
+    function categoryVisual(categoryLabel) {
+      return BUSINESS_CATEGORY_MAP[categoryLabel] || BUSINESS_CATEGORY_FALLBACK;
+    }
+
+    // Basit HTML kaçış fonksiyonu — Airtable'a girilen serbest metinler
+    // (işletme adı, açıklama vb.) doğrudan innerHTML'e basılmadan önce temizlenir.
+    function escapeHtml(value) {
+      const div = document.createElement('div');
+      div.textContent = value == null ? '' : String(value);
+      return div.innerHTML;
+    }
+
+    // Adres/isim bilgisinden otomatik bir Google Maps arama linki üretir.
+    // Airtable'da "HaritaLinki" alanı doluysa onu tercih ederiz, boşsa bunu kullanırız.
+    function buildMapsSearchLink(name, address) {
+      const query = encodeURIComponent(`${name || ''} ${address || ''} Hamburg`.trim());
+      return `https://www.google.com/maps/search/?api=1&query=${query}`;
+    }
+
+    // Airtable REST API'sinden bir tablonun TÜM sayfalarını (100'er kayıt) çeker.
+    // `formula` verilmezse varsayılan olarak sadece onaylı kayıtları çeker;
+    // Kampanyalar gibi ekstra koşulu (örn. süresi geçmemiş) olan tablolar
+    // kendi formülünü geçebilir.
+    async function fetchAirtableRecords(tableName, formula) {
+      const records = [];
+      let offset;
+      do {
+        const url = new URL(`https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${encodeURIComponent(tableName)}`);
+        url.searchParams.set('filterByFormula', formula || "{Durum}='Onaylandı'");
+        if (offset) url.searchParams.set('offset', offset);
+
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${AIRTABLE_CONFIG.token}` }
+        });
+        if (!res.ok) {
+          throw new Error(`Airtable isteği başarısız (${tableName}): HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        records.push(...data.records);
+        offset = data.offset; // Airtable 100'den fazla kayıtta "offset" döner, biz de bir sonraki sayfayı çekeriz
+      } while (offset);
+      return records;
+    }
+
+    // --- İşletme kartı HTML'i üret (statik tasarımla birebir aynı görünüm) ---
+    function renderBusinessCard(record) {
+      const f = record.fields || {};
+      const cat = BUSINESS_CATEGORY_MAP[f.Kategori] || BUSINESS_CATEGORY_FALLBACK;
+      const name = f.Ad || 'İsimsiz İşletme';
+      const address = f.Adres || '';
+      const image = Array.isArray(f.Gorsel) && f.Gorsel[0] ? f.Gorsel[0].url : null;
+      const mapsLink = f.HaritaLinki || buildMapsSearchLink(name, address);
+
+      const visualHtml = image
+        ? `<div class="h-36 bg-cover bg-center" style="background-image:url('${escapeHtml(image)}')"></div>`
+        : `<div class="h-36 placeholder-img" style="background-image:${cat.gradient}">${cat.emoji}</div>`;
+
+      let badgeHtml = '';
+      if (f.OneCikan) {
+        badgeHtml = `<span class="absolute top-3 left-3 z-10 bg-brand-gold text-brand-dark text-[11px] font-bold px-2.5 py-1 rounded-full shadow">⭐ Sponsorlu</span>`;
+      } else if (f.Dogrulanmis) {
+        badgeHtml = `<span class="absolute top-3 left-3 z-10 bg-white text-brand-teal text-[11px] font-bold px-2.5 py-1 rounded-full shadow">✓ Doğrulanmış</span>`;
+      }
+
+      const ratingHtml = (typeof f.Puan === 'number')
+        ? `<div class="mt-1 flex items-center gap-1 text-brand-gold text-sm" aria-label="${f.Puan} üzerinden 5 yıldız, ${f.YorumSayisi || 0} değerlendirme">
+             <span aria-hidden="true">★★★★★</span>
+             <span class="text-brand-dark/60 text-xs font-medium ml-1">${f.Puan.toFixed(1)} (${f.YorumSayisi || 0} yorum)</span>
+           </div>`
+        : `<div class="mt-1"><span class="text-brand-teal text-xs font-semibold">🆕 Yeni Eklendi</span></div>`;
+
+      // İkinci aksiyon butonu: WhatsApp > Randevu Linki > Telefon sırasıyla, hangisi doluysa o gösterilir
+      let contactHtml = '';
+      if (f.WhatsApp) {
+        const wa = String(f.WhatsApp).replace(/[^0-9]/g, '');
+        contactHtml = `<a href="https://wa.me/${wa}" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold bg-[#25D366] text-white px-3 py-2.5 rounded-full hover:opacity-90 transition-opacity">💬 WhatsApp</a>`;
+      } else if (f.RandevuLinki) {
+        contactHtml = `<a href="${escapeHtml(f.RandevuLinki)}" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold bg-brand-dark text-white px-3 py-2.5 rounded-full hover:bg-black transition-colors">🗓️ Randevu Al</a>`;
+      } else if (f.Telefon) {
+        contactHtml = `<a href="tel:${String(f.Telefon).replace(/\s/g, '')}" class="flex-1 text-center text-xs font-semibold bg-brand-dark text-white px-3 py-2.5 rounded-full hover:bg-black transition-colors">📞 Ara</a>`;
+      }
+
+      const searchBlob = `${name} ${f.Kategori || ''} ${address}`.toLowerCase();
+
+      return `
+        <article data-filterable data-bizcategory="${cat.key}" data-search="${escapeHtml(searchBlob)}"
+                  class="lift-card bg-brand-cream rounded-2xl overflow-hidden border border-black/5 relative">
+          ${badgeHtml}
+          ${visualHtml}
+          <div class="p-4">
+            <h3 class="font-heading font-bold text-base leading-snug">${escapeHtml(name)}</h3>
+            ${ratingHtml}
+            <p class="mt-2 text-xs text-brand-dark/60 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              ${escapeHtml(address)}
+            </p>
+            <div class="mt-4 flex gap-2">
+              <a href="${escapeHtml(mapsLink)}" target="_blank" rel="noopener" class="flex-1 text-center text-xs font-semibold border border-brand-dark/15 px-3 py-2.5 rounded-full hover:bg-brand-dark hover:text-white transition-colors">📍 Haritada Gör</a>
+              ${contactHtml}
+            </div>
+          </div>
+        </article>`;
+    }
+
+    // --- Etkinlik kartı HTML'i üret ---
+    function renderEventCard(record) {
+      const f = record.fields || {};
+      const cat = EVENT_CATEGORY_MAP[f.Kategori] || EVENT_CATEGORY_FALLBACK;
+      const name = f.Ad || 'İsimsiz Etkinlik';
+      const location = f.Konum || '';
+      const price = f.Fiyat || 'Bilgi Yok';
+      const ticketLink = f.BiletLinki || '#';
+      const image = Array.isArray(f.Gorsel) && f.Gorsel[0] ? f.Gorsel[0].url : null;
+
+      let day = '--', month = '---';
+      if (f.BaslangicTarihi) {
+        const d = new Date(f.BaslangicTarihi);
+        if (!isNaN(d)) {
+          day = new Intl.DateTimeFormat('tr-TR', { day: '2-digit' }).format(d);
+          month = new Intl.DateTimeFormat('tr-TR', { month: 'short' }).format(d).replace('.', '');
+        }
+      }
+
+      const visualHtml = image
+        ? `background-image:url('${escapeHtml(image)}')`
+        : cat.gradient;
+
+      const searchBlob = `${name} ${f.Kategori || ''} ${location}`.toLowerCase();
+
+      return `
+        <article data-filterable data-search="${escapeHtml(searchBlob)}"
+                  class="lift-card snap-start shrink-0 w-72 sm:w-80 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5">
+          <div class="relative h-40 placeholder-img" style="background-image:${visualHtml}">
+            ${image ? '' : cat.emoji}
+            <span class="absolute top-3 left-3 bg-white rounded-lg px-2.5 py-1 text-center leading-tight shadow">
+              <span class="block text-brand-red font-heading font-extrabold text-sm">${day}</span>
+              <span class="block text-[10px] uppercase text-brand-dark/60 -mt-0.5">${month}</span>
+            </span>
+            <span class="absolute top-3 right-3 bg-brand-dark/80 text-white text-[11px] font-semibold px-2 py-1 rounded-full">${escapeHtml(f.Kategori || 'Etkinlik')}</span>
+          </div>
+          <div class="p-4">
+            <h3 class="font-heading font-bold text-base leading-snug">${escapeHtml(name)}</h3>
+            <p class="mt-1.5 flex items-center gap-1.5 text-xs text-brand-dark/60">
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              ${escapeHtml(location)}
+            </p>
+            <div class="mt-4 flex items-center justify-between">
+              <span class="text-sm font-semibold text-brand-teal">${escapeHtml(price)}</span>
+              <a href="${escapeHtml(ticketLink)}" target="_blank" rel="noopener" class="text-xs font-semibold bg-brand-dark text-white px-3 py-2 rounded-full hover:bg-black">${f.BiletLinki ? 'Bilet Al' : 'Detay Gör'}</a>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    // --- Kampanya/indirim kartı HTML'i üret ---
+    // Prospektüs (Airtable "Prospektus" ek dosya alanı) görsel ya da PDF olabilir;
+    // her iki durumda da kartın görseli birinci dosyanın önizlemesi/kendisi olur ve
+    // "Prospektüsü Gör" butonu dosyayı yeni sekmede açar (PDF'ler tarayıcıda doğrudan görüntülenir).
+    function renderCampaignCard(record) {
+      const f = record.fields || {};
+      const cat = categoryVisual(f.Kategori);
+      const title = f.Baslik || 'Kampanya';
+      const businessName = f.IsletmeAdi || '';
+      const file = Array.isArray(f.Prospektus) && f.Prospektus[0] ? f.Prospektus[0] : null;
+      const isImage = file && file.type && file.type.startsWith('image/');
+      const fileUrl = file ? file.url : null;
+
+      // Kalan gün sayısı — 2 günden azsa "Son X gün!" ile aciliyet vurgusu yapılır
+      let daysLeftHtml = '';
+      if (f.BitisTarihi) {
+        const end = new Date(f.BitisTarihi);
+        const today = new Date(); today.setHours(0, 0, 0, 0);
+        const daysLeft = Math.ceil((end - today) / 86400000);
+        if (daysLeft >= 0) {
+          daysLeftHtml = daysLeft <= 2
+            ? `<span class="absolute top-3 right-3 bg-brand-red text-white text-[11px] font-bold px-2 py-1 rounded-full animate-pulse">Son ${daysLeft === 0 ? 'gün' : daysLeft + ' gün'}!</span>`
+            : `<span class="absolute top-3 right-3 bg-brand-dark/80 text-white text-[11px] font-semibold px-2 py-1 rounded-full">${daysLeft} gün kaldı</span>`;
+        }
+      }
+
+      const visualHtml = (isImage && fileUrl)
+        ? `<div class="relative h-40 bg-cover bg-center" style="background-image:url('${escapeHtml(fileUrl)}')">${daysLeftHtml}</div>`
+        : `<div class="relative h-40 placeholder-img" style="background-image:${cat.gradient}">${cat.emoji}${daysLeftHtml}</div>`;
+
+      const searchBlob = `${title} ${businessName} ${f.Kategori || ''}`.toLowerCase();
+
+      return `
+        <article data-filterable data-search="${escapeHtml(searchBlob)}"
+                  class="lift-card snap-start shrink-0 w-72 sm:w-80 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5">
+          ${visualHtml}
+          <div class="p-4">
+            <p class="text-[11px] font-semibold text-brand-teal uppercase tracking-wide">${escapeHtml(businessName)}</p>
+            <h3 class="font-heading font-bold text-base leading-snug mt-0.5">${escapeHtml(title)}</h3>
+            ${f.Aciklama ? `<p class="mt-1.5 text-xs text-brand-dark/60 line-clamp-2">${escapeHtml(f.Aciklama)}</p>` : ''}
+            <div class="mt-4">
+              ${fileUrl
+                ? `<a href="${escapeHtml(fileUrl)}" target="_blank" rel="noopener" class="block text-center text-xs font-semibold bg-brand-dark text-white px-3 py-2.5 rounded-full hover:bg-black">📄 Prospektüsü Gör</a>`
+                : `<span class="block text-center text-xs font-semibold text-brand-dark/40 border border-brand-dark/10 px-3 py-2.5 rounded-full">Detaylar mağazada</span>`}
+            </div>
+          </div>
+        </article>`;
+    }
+
+    // --- JSON-LD (yapısal veri) üretimi: her onaylı kayıt için ayrı bir <script> etiketi <head>'e eklenir ---
+    function injectJsonLd(obj) {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(obj);
+      document.head.appendChild(script);
+    }
+
+    function buildBusinessJsonLd(record) {
+      const f = record.fields || {};
+      const cat = BUSINESS_CATEGORY_MAP[f.Kategori] || BUSINESS_CATEGORY_FALLBACK;
+      const obj = {
+        '@context': 'https://schema.org',
+        '@type': cat.schemaType,
+        name: f.Ad,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: f.Adres || '',
+          addressLocality: 'Hamburg',
+          addressCountry: 'DE'
+        }
+      };
+      if (f.Telefon) obj.telephone = f.Telefon;
+      if (typeof f.Puan === 'number') {
+        obj.aggregateRating = { '@type': 'AggregateRating', ratingValue: String(f.Puan), reviewCount: String(f.YorumSayisi || 0) };
+      }
+      if (Array.isArray(f.Gorsel) && f.Gorsel[0]) obj.image = f.Gorsel[0].url;
+      return obj;
+    }
+
+    function buildEventJsonLd(record) {
+      const f = record.fields || {};
+      if (!f.Ad || !f.BaslangicTarihi) return null;
+      const obj = {
+        '@context': 'https://schema.org',
+        '@type': 'Event',
+        name: f.Ad,
+        startDate: f.BaslangicTarihi,
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        eventStatus: 'https://schema.org/EventScheduled',
+        location: { '@type': 'Place', name: f.Konum || 'Hamburg', address: { '@type': 'PostalAddress', addressLocality: 'Hamburg', addressCountry: 'DE' } },
+        organizer: { '@type': 'Organization', name: 'Bizim Hamburg', url: 'https://www.bizimhamburg.de' }
+      };
+      if (f.Aciklama) obj.description = f.Aciklama;
+      if (Array.isArray(f.Gorsel) && f.Gorsel[0]) obj.image = [f.Gorsel[0].url];
+      if (f.BiletLinki) {
+        obj.offers = { '@type': 'Offer', url: f.BiletLinki, priceCurrency: 'EUR', availability: 'https://schema.org/InStock' };
+        if (f.Fiyat && !isNaN(parseFloat(f.Fiyat))) obj.offers.price = String(parseFloat(f.Fiyat));
+      }
+      return obj;
+    }
+
+    // --- Verileri çek, render et, JSON-LD ekle ---
+    async function loadBusinesses() {
+      const container = document.getElementById('businesses-container');
+      const errorMsg = document.getElementById('biz-error');
+      try {
+        const records = await fetchAirtableRecords(AIRTABLE_CONFIG.tables.businesses);
+        if (records.length === 0) {
+          container.innerHTML = '';
+          document.getElementById('biz-empty').classList.remove('hidden');
+          return;
+        }
+        container.innerHTML = records.map(renderBusinessCard).join('');
+        records.forEach(r => injectJsonLd(buildBusinessJsonLd(r)));
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = '';
+        errorMsg.classList.remove('hidden');
+      } finally {
+        initBizFilterInteractions();
+      }
+    }
+
+    async function loadEvents() {
+      const container = document.getElementById('events-container');
+      const errorMsg = document.getElementById('events-error');
+      try {
+        const records = await fetchAirtableRecords(AIRTABLE_CONFIG.tables.events);
+        if (records.length === 0) {
+          container.innerHTML = '';
+          document.getElementById('events-empty').classList.remove('hidden');
+          return;
+        }
+        // Yaklaşan etkinlikleri tarihe göre sırala (en yakın önce)
+        records.sort((a, b) => new Date(a.fields.BaslangicTarihi || 0) - new Date(b.fields.BaslangicTarihi || 0));
+        container.innerHTML = records.map(renderEventCard).join('');
+        records.forEach(r => {
+          const jsonLd = buildEventJsonLd(r);
+          if (jsonLd) injectJsonLd(jsonLd);
+        });
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = '';
+        errorMsg.classList.remove('hidden');
+      }
+    }
+
+    async function loadCampaigns() {
+      const container = document.getElementById('campaigns-container');
+      const errorMsg = document.getElementById('campaigns-error');
+      try {
+        // Sadece onaylı VE süresi bugün ya da sonrasında biten kampanyalar gösterilir.
+        // BitisTarihi'nin bir gün öncesinden "sonra" olması, bitiş gününün kendisini de dahil eder.
+        const formula = "AND({Durum}='Onaylandı', IS_AFTER({BitisTarihi}, DATEADD(TODAY(), -1, 'days')))";
+        const records = await fetchAirtableRecords(AIRTABLE_CONFIG.tables.campaigns, formula);
+        if (records.length === 0) {
+          container.innerHTML = '';
+          document.getElementById('campaigns-empty').classList.remove('hidden');
+          return;
+        }
+        // En yakın zamanda bitecek kampanya en önde (aciliyet sırasına göre)
+        records.sort((a, b) => new Date(a.fields.BitisTarihi || 0) - new Date(b.fields.BitisTarihi || 0));
+        container.innerHTML = records.map(renderCampaignCard).join('');
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = '';
+        errorMsg.classList.remove('hidden');
+      }
+    }
+
     /* ==============================================================
        ETKİLEŞİM KATMANI (vanilla JS — build adımı yok, doğrudan
        GitHub Pages üzerinde çalışır)
@@ -755,22 +903,33 @@
     }, { passive: true });
 
     // --- İşletme kategori filtresi ---
-    const bizCards = document.querySelectorAll('#isletmeler [data-filterable]');
+    // NOT: Kartlar artık Airtable'dan asenkron geldiği için bizCards'ı
+    // ÖNCEDEN sabitlemiyoruz — her filtre çağrısında yeniden sorguluyoruz,
+    // böylece yeni render edilen kartları da kapsıyor.
     const bizFilterButtons = document.querySelectorAll('[data-biz-filter]');
     const bizEmptyMsg = document.getElementById('biz-empty');
 
     function applyBizFilter(category) {
+      const bizCards = document.querySelectorAll('#businesses-container [data-filterable]');
       let visibleCount = 0;
       bizCards.forEach(card => {
         const match = category === 'all' || card.dataset.bizcategory === category;
         card.classList.toggle('is-hidden', !match);
         if (match) visibleCount++;
       });
-      bizEmptyMsg.classList.toggle('hidden', visibleCount !== 0);
+      bizEmptyMsg.classList.toggle('hidden', visibleCount !== 0 || bizCards.length === 0);
 
       bizFilterButtons.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.bizFilter === category);
       });
+    }
+
+    // İşletme kartları her render edildiğinde (loadBusinesses() sonunda) çağrılır;
+    // filtre butonlarına tıklama dinleyicilerini bağlar (buton sayısı sabit olduğu
+    // için burada tek seferlik bağlamak yeterli, kartlar için applyBizFilter zaten
+    // her çağrıda taze sorgu yapıyor).
+    function initBizFilterInteractions() {
+      applyBizFilter('all');
     }
 
     bizFilterButtons.forEach(btn => {
@@ -803,17 +962,17 @@
     // --- Akıllı arama: hem etkinlik hem işletme kartlarında basit metin eşleşmesi ---
     // NOT: Bu, çalışan bir demo sunmak için client-side basit bir filtredir.
     // Gerçek üretimde Algolia/Meilisearch gibi bir arama servisiyle değiştirilmeli.
+    // allFilterable de her arama çağrısında taze sorgulanır (dinamik kartları kapsasın diye).
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
     const searchEmpty = document.getElementById('search-empty');
-    const allFilterable = document.querySelectorAll('[data-filterable]');
 
     function runSearch(term) {
+      const allFilterable = document.querySelectorAll('[data-filterable]');
       const q = term.trim().toLowerCase();
       if (!q) {
         allFilterable.forEach(el => el.classList.remove('is-hidden'));
         searchEmpty.classList.add('hidden');
-        bizEmptyMsg.classList.add('hidden');
         applyBizFilter('all');
         return;
       }
@@ -845,6 +1004,11 @@
 
     // --- Footer yılı otomatik güncelle ---
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- Airtable verilerini sayfa yüklenir yüklenmez çek ---
+    loadBusinesses();
+    loadEvents();
+    loadCampaigns();
   </script>
 </body>
 </html>
