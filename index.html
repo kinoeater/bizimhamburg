@@ -387,7 +387,7 @@
                Airtable'daki "Isletmeler" tablosunun paylaşılabilir Form linkini yapıştır.
                Böylece işletme sahibi doldurduğunda kayıt otomatik "Beklemede" durumuyla
                tabloya düşer, sen onaylayınca sitede görünür. -->
-          <a href="https://airtable.com/invite/l?inviteId=invOH4uwkQ7N6ix2q&inviteToken=f415d93999f1317e732be9abe7ceb10470bfd9ef655f3e24a664bd768851f3e1&utm_medium=email&utm_source=product_team&utm_content=transactional-alerts" target="_blank" rel="noopener" class="mt-7 inline-flex items-center gap-2 bg-brand-red text-white font-semibold px-6 py-3.5 rounded-full hover:bg-red-600 transition-colors">
+          <a href="PASTE_AIRTABLE_FORM_URL_HERE" target="_blank" rel="noopener" class="mt-7 inline-flex items-center gap-2 bg-brand-red text-white font-semibold px-6 py-3.5 rounded-full hover:bg-red-600 transition-colors">
             İşletmeni Ücretsiz Ekle →
           </a>
           <p class="mt-3 text-xs text-white/50">Alternatif: <a href="https://wa.me/4940000000" target="_blank" rel="noopener" class="underline hover:text-white">WhatsApp'tan yaz</a>, biz senin adına ekleyelim.</p>
@@ -492,29 +492,37 @@
 
   <script>
     /* ==============================================================
-       VERİ KATMANI — AIRTABLE ENTEGRASYONU
-       Bu bölüm Airtable'daki "Isletmeler" ve "Etkinlikler" tablolarını
-       okuyup sayfaya render eder. Kurulum adımları için proje
-       klasöründeki "airtable-kurulum-rehberi.md" dosyasına bak.
+       VERİ KATMANI — ARTIK AIRTABLE'A DOĞRUDAN BAĞLANMIYORUZ
+       Eskiden bu dosyada bir Airtable token'ı vardı ve tarayıcı
+       doğrudan Airtable'a bağlanıyordu — ama bu token statik bir
+       sitede HİÇBİR ZAMAN gerçekten gizlenemez (sayfa kaynağını
+       görebilen herkes görebilir; GitHub'ın push protection'ı da
+       tam olarak bunu yakaladı).
 
-       ⚠️ GÜVENLİK NOTU: Aşağıya yapıştıracağın token SADECE OKUMA
-       izinli (read-only), SADECE bu tek base'e erişebilen bir
-       Personal Access Token olmalı. Bu site herkese açık statik bir
-       sayfa olduğu için, bu token sayfa kaynağını görebilen HERKES
-       tarafından görülebilir. Bu yüzden token'a asla "yazma" izni
-       verme ve Airtable base'inde bu tabloların DIŞINDA (örn. henüz
-       onaylanmamış hassas veri içeren ayrı bir tablo/base) hiçbir şey
-       tutma. Detaylar rehberin "Güvenlik" bölümünde.
+       Bunun yerine artık şu akış var:
+         1. GitHub Actions (".github/workflows/airtable-sync.yml"),
+            belirli aralıklarla, GİZLİ tutulan bir token ile Airtable'a
+            bağlanıp onaylı kayıtları çeker ve "data/*.json" dosyalarına
+            yazar (ekli dosyaları da indirip "data/uploads/" içine koyar).
+         2. Bu sayfa (index.html) Airtable'a değil, o basit JSON
+            dosyalarına bakar — token'a hiç ihtiyacı yok, çünkü hiçbir
+            zaman tarayıcıya ulaşmıyor.
+       Kurulum adımları için proje klasöründeki
+       "airtable-kurulum-rehberi.md" dosyasına bak.
        ============================================================== */
-    const AIRTABLE_CONFIG = {
-      baseId: 'appAfKIZoMYuGSCLu',       // örn: 'appXXXXXXXXXXXXXX' — Airtable API dokümantasyon sayfasından alınır
-      token: 'PASTE_YOUR_READ_ONLY_TOKEN_HERE', // Personal Access Token — sadece data.records:read izniyle oluştur, ASLA gerçek token'ı commit'leme
-      tables: {
-        businesses: 'Isletmeler',
-        events: 'Etkinlikler',
-        campaigns: 'Kampanyalar'
-      }
+    const DATA_CONFIG = {
+      businesses: 'data/isletmeler.json',
+      events: 'data/etkinlikler.json',
+      campaigns: 'data/kampanyalar.json'
     };
+
+    // Airtable ek dosya URL'leri birkaç saat sonra geçersiz oluyor, bu yüzden
+    // GitHub Actions dosyaları indirip "localPath" olarak repo'ya kaydediyor.
+    // Bunu sayfanın barındırıldığı adrese göre TAM bir URL'e çeviriyoruz
+    // (hem göreli linkler hem de JSON-LD için mutlak URL gerekiyor).
+    function toAbsoluteUrl(relativePath) {
+      return new URL(relativePath, window.location.href).href;
+    }
 
     // İşletme kategorisi → { filtre anahtarı, ikon, kart gradyanı, schema.org tipi }
     // Airtable'daki "Kategori" tekli-seçim (single select) alanının değerleriyle BİREBİR eşleşmeli.
@@ -560,29 +568,17 @@
       return `https://www.google.com/maps/search/?api=1&query=${query}`;
     }
 
-    // Airtable REST API'sinden bir tablonun TÜM sayfalarını (100'er kayıt) çeker.
-    // `formula` verilmezse varsayılan olarak sadece onaylı kayıtları çeker;
-    // Kampanyalar gibi ekstra koşulu (örn. süresi geçmemiş) olan tablolar
-    // kendi formülünü geçebilir.
-    async function fetchAirtableRecords(tableName, formula) {
-      const records = [];
-      let offset;
-      do {
-        const url = new URL(`https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${encodeURIComponent(tableName)}`);
-        url.searchParams.set('filterByFormula', formula || "{Durum}='Onaylandı'");
-        if (offset) url.searchParams.set('offset', offset);
-
-        const res = await fetch(url, {
-          headers: { Authorization: `Bearer ${AIRTABLE_CONFIG.token}` }
-        });
-        if (!res.ok) {
-          throw new Error(`Airtable isteği başarısız (${tableName}): HTTP ${res.status}`);
-        }
-        const data = await res.json();
-        records.push(...data.records);
-        offset = data.offset; // Airtable 100'den fazla kayıtta "offset" döner, biz de bir sonraki sayfayı çekeriz
-      } while (offset);
-      return records;
+    // GitHub Actions'ın Airtable'dan çekip yazdığı statik JSON dosyasını okur.
+    // Onay/tarih filtreleri artık build aşamasında (scripts/sync-airtable.js
+    // içinde) uygulanıyor, bu yüzden burada ekstra bir filtreleme yok —
+    // dosyada ne varsa zaten gösterilmesi gereken onaylı kayıtlardır.
+    // `cache: 'no-store'` tarayıcının eski bir kopyayı göstermesini engeller.
+    async function fetchLocalRecords(jsonPath) {
+      const res = await fetch(jsonPath, { cache: 'no-store' });
+      if (!res.ok) {
+        throw new Error(`Veri dosyası okunamadı (${jsonPath}): HTTP ${res.status}`);
+      }
+      return res.json();
     }
 
     // --- İşletme kartı HTML'i üret (statik tasarımla birebir aynı görünüm) ---
@@ -591,7 +587,7 @@
       const cat = BUSINESS_CATEGORY_MAP[f.Kategori] || BUSINESS_CATEGORY_FALLBACK;
       const name = f.Ad || 'İsimsiz İşletme';
       const address = f.Adres || '';
-      const image = Array.isArray(f.Gorsel) && f.Gorsel[0] ? f.Gorsel[0].url : null;
+      const image = Array.isArray(f.Gorsel) && f.Gorsel[0] && f.Gorsel[0].localPath ? f.Gorsel[0].localPath : null;
       const mapsLink = f.HaritaLinki || buildMapsSearchLink(name, address);
 
       const visualHtml = image
@@ -653,7 +649,7 @@
       const location = f.Konum || '';
       const price = f.Fiyat || 'Bilgi Yok';
       const ticketLink = f.BiletLinki || '#';
-      const image = Array.isArray(f.Gorsel) && f.Gorsel[0] ? f.Gorsel[0].url : null;
+      const image = Array.isArray(f.Gorsel) && f.Gorsel[0] && f.Gorsel[0].localPath ? f.Gorsel[0].localPath : null;
 
       let day = '--', month = '---';
       if (f.BaslangicTarihi) {
@@ -706,7 +702,7 @@
       const businessName = f.IsletmeAdi || '';
       const file = Array.isArray(f.Prospektus) && f.Prospektus[0] ? f.Prospektus[0] : null;
       const isImage = file && file.type && file.type.startsWith('image/');
-      const fileUrl = file ? file.url : null;
+      const fileUrl = file && file.localPath ? file.localPath : null;
 
       // Kalan gün sayısı — 2 günden azsa "Son X gün!" ile aciliyet vurgusu yapılır
       let daysLeftHtml = '';
@@ -770,7 +766,7 @@
       if (typeof f.Puan === 'number') {
         obj.aggregateRating = { '@type': 'AggregateRating', ratingValue: String(f.Puan), reviewCount: String(f.YorumSayisi || 0) };
       }
-      if (Array.isArray(f.Gorsel) && f.Gorsel[0]) obj.image = f.Gorsel[0].url;
+      if (Array.isArray(f.Gorsel) && f.Gorsel[0] && f.Gorsel[0].localPath) obj.image = toAbsoluteUrl(f.Gorsel[0].localPath);
       return obj;
     }
 
@@ -788,7 +784,7 @@
         organizer: { '@type': 'Organization', name: 'Bizim Hamburg', url: 'https://www.bizimhamburg.de' }
       };
       if (f.Aciklama) obj.description = f.Aciklama;
-      if (Array.isArray(f.Gorsel) && f.Gorsel[0]) obj.image = [f.Gorsel[0].url];
+      if (Array.isArray(f.Gorsel) && f.Gorsel[0] && f.Gorsel[0].localPath) obj.image = [toAbsoluteUrl(f.Gorsel[0].localPath)];
       if (f.BiletLinki) {
         obj.offers = { '@type': 'Offer', url: f.BiletLinki, priceCurrency: 'EUR', availability: 'https://schema.org/InStock' };
         if (f.Fiyat && !isNaN(parseFloat(f.Fiyat))) obj.offers.price = String(parseFloat(f.Fiyat));
@@ -801,7 +797,7 @@
       const container = document.getElementById('businesses-container');
       const errorMsg = document.getElementById('biz-error');
       try {
-        const records = await fetchAirtableRecords(AIRTABLE_CONFIG.tables.businesses);
+        const records = await fetchLocalRecords(DATA_CONFIG.businesses);
         if (records.length === 0) {
           container.innerHTML = '';
           document.getElementById('biz-empty').classList.remove('hidden');
@@ -822,7 +818,7 @@
       const container = document.getElementById('events-container');
       const errorMsg = document.getElementById('events-error');
       try {
-        const records = await fetchAirtableRecords(AIRTABLE_CONFIG.tables.events);
+        const records = await fetchLocalRecords(DATA_CONFIG.events);
         if (records.length === 0) {
           container.innerHTML = '';
           document.getElementById('events-empty').classList.remove('hidden');
@@ -846,10 +842,10 @@
       const container = document.getElementById('campaigns-container');
       const errorMsg = document.getElementById('campaigns-error');
       try {
-        // Sadece onaylı VE süresi bugün ya da sonrasında biten kampanyalar gösterilir.
-        // BitisTarihi'nin bir gün öncesinden "sonra" olması, bitiş gününün kendisini de dahil eder.
-        const formula = "AND({Durum}='Onaylandı', IS_AFTER({BitisTarihi}, DATEADD(TODAY(), -1, 'days')))";
-        const records = await fetchAirtableRecords(AIRTABLE_CONFIG.tables.campaigns, formula);
+        // Onay ve süre filtrelemesi artık GitHub Actions senkronizasyon script'inde
+        // (scripts/sync-airtable.js) sunucu tarafında yapılıyor; buraya sadece
+        // gösterilmeye hazır, süresi geçmemiş kampanyalar geliyor.
+        const records = await fetchLocalRecords(DATA_CONFIG.campaigns);
         if (records.length === 0) {
           container.innerHTML = '';
           document.getElementById('campaigns-empty').classList.remove('hidden');

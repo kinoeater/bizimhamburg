@@ -1,0 +1,50 @@
+name: Airtable senkronizasyonu
+
+# Bu workflow, Airtable'daki onaylı kayıtları çekip "data/" klasörüne
+# statik JSON dosyaları olarak yazar. Gerçek Airtable token'ı SADECE
+# GitHub Repository Secrets içinde durur — hiçbir zaman index.html'e
+# veya repo'ya yazılmaz, tarayıcıya hiç ulaşmaz.
+#
+# Kurulum: repo Settings > Secrets and variables > Actions altına
+# AIRTABLE_BASE_ID ve AIRTABLE_TOKEN adında iki secret eklemelisin.
+# Detaylar için airtable-kurulum-rehberi.md dosyasına bak.
+
+on:
+  schedule:
+    # Her 30 dakikada bir çalışır (UTC). GitHub, 60 günden uzun süre
+    # commit yapılmayan repolarda zamanlanmış (schedule) workflow'ları
+    # otomatik olarak devre dışı bırakabilir — bu durumda Actions
+    # sekmesinden "Enable workflow" ile tekrar açman yeterli.
+    - cron: '*/30 * * * *'
+  workflow_dispatch: {}
+    # Actions sekmesinden "Run workflow" butonuyla istediğin an elle
+    # de tetikleyebilirsin (örn. yeni bir kaydı onayladıktan hemen sonra).
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu indir
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Airtable verisini çek ve JSON dosyalarını yaz
+        env:
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+        run: node scripts/sync-airtable.js
+
+      - name: Değişiklik varsa commit'le ve yayınla
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "chore: Airtable verisini güncelle [otomatik]"
+          git push
