@@ -15,7 +15,8 @@ on:
     # commit yapılmayan repolarda zamanlanmış (schedule) workflow'ları
     # otomatik olarak devre dışı bırakabilir — bu durumda Actions
     # sekmesinden "Enable workflow" ile tekrar açman yeterli.
-    - cron: '*/1* * * *'
+    - cron: '*/1 * * * *'
+  
   workflow_dispatch: {}
     # Actions sekmesinden "Run workflow" butonuyla istediğin an elle
     # de tetikleyebilirsin (örn. yeni bir kaydı onayladıktan hemen sonra).
