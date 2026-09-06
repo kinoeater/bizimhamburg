@@ -1,1 +1,254 @@
-[]
+[
+  {
+    "id": "rec1IVHnHVLcjbaqW",
+    "createdTime": "2026-09-06T21:58:05.000Z",
+    "fields": {
+      "Durum": "Onaylandı",
+      "BaslangicTarihi": "2026-09-06",
+      "Kategori": "Fotoğrafçı",
+      "Aciklama": "Düğün fotoğraf ve video paketlerinde %20 indirim fırsatı.",
+      "Baslik": "Düğün Fotoğraf Paketlerinde %20 İndirim",
+      "IsletmeAdi": "Lens Fotoğraf",
+      "BitisTarihi": "2026-10-15",
+      "Prospektus": [
+        {
+          "id": "att5JvfcNydV5Qwdl",
+          "width": 500,
+          "height": 400,
+          "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/7fxahFzpuLyZIG5RAzU6PA/ifBsgap9jTjRci59jZ_6qpazqqpodV_dJBh0rHNOQMs_tIkKt-furzlpjkevGA5YOQ54wjlKh4BcjRsKUhCK3ZdW54WywMZNWB_cUA2IBnatwF_K1WTCsqootNIsKpubsjd-vlVd_Mk_5Srynb6VzM9pn5zifvx93NwhMYNeccQ/Ln6kvNE64w_RQga14tvHjRN4yMWNpkdCDIRA6vu4nlU",
+          "filename": "lensPhotography.jpeg",
+          "size": 30308,
+          "type": "image/jpeg",
+          "thumbnails": {
+            "small": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/-t5byedtW8wKy-zlTofQhQ/2FCYP-bv1LPsHzrKEGRQnUFvNveNXVgRzi3YGV4Yw29sy8DeMvecBEALjFFZC-zaaG0AdRhoDqmjHaToN4zp_wIZmIjZGzoJcn51wNK3PdAoG5UM3YRZJqoUjR8ujzSH9F_NuzNudEoftEh_XgP9Hw/rGzb-cfyAiuQQ1kzLLPb-b6rfOlxCcjqDxcIy1I8vb0",
+              "width": 45,
+              "height": 36
+            },
+            "large": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/qxqG-1N0iSdSOx9cTIHo2g/b_lI3kRwHw6zf427JJlPiGZEYSY2hAMkahbNxtRT8yJD_0S3SWvkRrRjQSir3l7NacKHNmWBBomnlVtyxmI8RT0aRZmHTUAetIhZYSGosYy22KEj4enud2ARxAQSTxhyCUnepnEB5eLA8SYJFcHxjg/FioSRGMZzQpCx4bt2DtaItTL_yKzQcbapc2toNmU41k",
+              "width": 500,
+              "height": 400
+            },
+            "full": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/qSkcw41rs8D-1iaqQB25Rg/Yj90ciBCmcRKtohU4tfso_iSP1kYf8S1dpYn30upBdmfOemlvuAStSrsxDvG-7GKQovg7M0hptuRVMliDJLnCZHLAenCvsPy5qCNXwVu2nt2DZEju6gXXTmA_56nfNwSoIl-hQEudq_r3sIge5Sd-w/C0WzhFdDeyeZIuVuWbAynHCbwP_84d18-rAlnUzdHd4",
+              "width": 500,
+              "height": 400
+            }
+          },
+          "localPath": "data/uploads/att5JvfcNydV5Qwdl-lensphotography.jpeg"
+        }
+      ]
+    }
+  },
+  {
+    "id": "recD7CG4H1WCGk1Yz",
+    "createdTime": "2026-09-06T21:58:01.000Z",
+    "fields": {
+      "Durum": "Onaylandı",
+      "BaslangicTarihi": "2026-09-08",
+      "Kategori": "Kuaför/Berber",
+      "Aciklama": "Hafta içi saç kesimi ve sakal bakım paketinde özel indirim.",
+      "Baslik": "Saç Kesimi + Sakal Paketinde %30 İndirim",
+      "IsletmeAdi": "Style Hair",
+      "BitisTarihi": "2026-09-25",
+      "Prospektus": [
+        {
+          "id": "att6NgD08WGZEqSy4",
+          "width": 667,
+          "height": 500,
+          "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/L9f3KGJEVOJUGWhkpx2IsA/EwwIDBzMwUJ7SQqpFq8UN-tl5PTlMc99j-COZK6nNMeuGvhUufFLA8ZXADouldnAWaKGLx9hBesIQq6qwyl0K6OA7GY8i8sau86aFaVl-2m4ZrlcV6yVBSBjeQYY8i1G3pxggPg61eMcLoZfOLEyzrrbeYpfsV-2fpeszuqiDis/pIgjGe3Iy5--X8N28IbncPDqdFi5sNdRYdApr-YXUzU",
+          "filename": "styleHair.png",
+          "size": 166345,
+          "type": "image/png",
+          "thumbnails": {
+            "small": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/5sBoxWuWuwRgGJYDulS4iQ/fLRhZTgbBJ0zMNUCw91FSOutoGKZGvhi_p44P_NyrKiXap_fa40acpKOqpFm2mA0yNuOgwS3tAa0u2Ak1RKZMsXvlSl9sqZkQAVaKd5KPG8QOEKZNUQwxftaZkOUVznu7NTIRRle9DbjLbJ7XMI5JQ/tqma_AN8QxrOzZBwxECJthrU-Igm7FCCJ9kCbpSfXt8",
+              "width": 48,
+              "height": 36
+            },
+            "large": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/C5o3p9hZ82aFJ01OZCieuQ/bP81YKlpZiP0tvjf2iGojrdtv5oXDI41kn94GRqh-ncimTFOcabGHeSHKN6tve83sxGhID2rYdQA5CXCSUEtUr6EJfbYL6cT9N3FPqgVFql5GdZBioPWNSNQdH5OQq2Shb5p83fgtyZ47qVN_rWj-Q/aMcCiADa-SwEOkF-mqkTy24XQQSHTL2jk4ouM_QOG_A",
+              "width": 667,
+              "height": 500
+            },
+            "full": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/cKVUdXwzyYkt5NzVIIoiOQ/Z1HSoota08AqKf7513fstAtdyKz2GMgSkFL_AXC87p4iomje9_0ANwE4y4eKVHJ5CDUwJwyZ4pr98O3WqjF3wTyHahWKGmVxXOoKQYl9dRzJ28i6GC2UbXSNkIBRSSoABbqPUJeaQogS1l1mCSEbTA/NqYAxwQsWiLhe-Gie0-x02Syz8rTGVA6Z22LHeCFOx0",
+              "width": 667,
+              "height": 500
+            }
+          },
+          "localPath": "data/uploads/att6NgD08WGZEqSy4-stylehair.png"
+        }
+      ]
+    }
+  },
+  {
+    "id": "recQPO4Y08qCILitf",
+    "createdTime": "2026-09-06T21:58:04.000Z",
+    "fields": {
+      "Durum": "Onaylandı",
+      "BaslangicTarihi": "2026-09-10",
+      "Kategori": "Doktor/Klinik",
+      "Aciklama": "Yeni hastalara ilk muayene için özel kampanya fiyatı.",
+      "Baslik": "İlk Muayenede Özel Fiyat",
+      "IsletmeAdi": "Elbe Klinik",
+      "BitisTarihi": "2026-10-10",
+      "Prospektus": [
+        {
+          "id": "attM9V5Lr5Iy5qSKu",
+          "width": 387,
+          "height": 516,
+          "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/vLjyn-YqSxLbL8FVCNEn5Q/x7NaretUAKXQrFu444kTxBCiufZUq3R378CHAAR5wPJRZLEEDRezgfLYZwE9fVi4AyK-Klk5fEc-YdA4Wt7V73jXSg8yEA0uIlxHMLlMZrciINACx7BiO9jXTPw9MK7VppvKpE-i_-9TIP4f--2YcDtQ0hIwO8-j7wG6_LmwhH8/yzF4leopDj39wwLHwFthYR8dnRwr0RE4jxX8Yv1Z-uM",
+          "filename": "elbeKlinik.jpeg",
+          "size": 35285,
+          "type": "image/jpeg",
+          "thumbnails": {
+            "small": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/AAM8XLaCclt0iSv-Ep9cgA/DUqHygSHic3TXxmMgg9hP6yIlgzC0TRXN8dMO8i-blDEynPyy1ZSmOaHeripPHkOO3AmOw-bSlUP_4GmuQaMcFv273r2pO7bP4h9jm56VC1Tg82XncvmzVPaIKB1a4Z7lcug6OAlfqgnIIczGmkApw/pc0IcmrO_LMscdNRrDsQz67K_670m68EcCehEJLs8W0",
+              "width": 27,
+              "height": 36
+            },
+            "large": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/qgX_q5Ude5Z67qVZEFKalA/o8wm-yeI5B_9un68Hz70cVPSm4WHvZz6W3G8a10SahzcDMcCCU5S3Iz_iG0wuI-uMZVCH54PTSeRRc_EU7eg26YJtgDLpBVbH7KZx_5hBoXuCSK2nBVsuK5jHqhsx07l69iNIL2CcQlgsHZ3slVYtg/raks9BDsvAd3gmQoUBdy1lghb1_O2eFEvrtLWdIZ9d0",
+              "width": 387,
+              "height": 516
+            },
+            "full": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/SxwTF4_3sptUzS3mA-JYew/7FoiMueQdRPFKGE3AEsZUwNJuUbNiguv7DeE0fO69yT37r705djQx2ItZEXjUrMAIygVUAENdqAxBJ_U7b8CpRfzH4-yQEea_CWmqSkpw2XEFFh2AJ4q1fQZObbQXRso-9iU5ohnO467gcVQf88sgw/BR9HfzvvI9TIKEXEsDt5nUOZ9p0IDqMYNsbAYCFGHAA",
+              "width": 387,
+              "height": 516
+            }
+          },
+          "localPath": "data/uploads/attM9V5Lr5Iy5qSKu-elbeklinik.jpeg"
+        }
+      ]
+    }
+  },
+  {
+    "id": "recRumM8oE1oWg7it",
+    "createdTime": "2026-09-06T21:42:13.000Z",
+    "fields": {
+      "Durum": "Onaylandı",
+      "BaslangicTarihi": "2026-09-06",
+      "Kategori": "Restoran",
+      "Aciklama": "2 kişilik kebap menüsünde %25 indirim. İçecekler dahildir.",
+      "Baslik": "2 Kişilik Kebap Menü %25 İndirimli",
+      "IsletmeAdi": "Anadolu Sofrası",
+      "BitisTarihi": "2026-09-30",
+      "Prospektus": [
+        {
+          "id": "attTWDTpcKvjkwicR",
+          "width": 4000,
+          "height": 3000,
+          "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/xVR7yCFEZsMZFfInDR0e7A/NtPnIbXhmcCz5B_XwL1PNnoUje_FiNc6FlRcjIegCoZQsdlT0MwAF937mqLG1b0pTV1aSjrk7sQ9y7a0mZ0aQ5t9u9cKLmJl7AaSas5GgXVBfKqlMz7jWmHHBI-kdlfZ11W5201cfc-EElIjS7e-D8HYFpniTjIcThZ0dR86naQ/InVuRK_OqX_HMOS8krX2Rxhfqia6Ucurg2PnF6i1H0Y",
+          "filename": "anadoluSofrasi.jpg",
+          "size": 2869060,
+          "type": "image/jpeg",
+          "thumbnails": {
+            "small": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/6tEoB1GyJpAHSnnzG18cog/OSlkhwPxrnsEN-dZevZWmJR9rxebw_hEInxy75fcLcVHHuUCHNzFJU4G53ZbU28TQVU9CRL54vyiM1gmyN3Jd-S5P4YXRASqJSiQE28KgXwntmG1IBGX-l_-VvDz9qeLvVe9v-0B6mK0CZflYwNccA/qDaktHYua8CM82_Apo-50JsnPVV__RBQqFELDgXpnLY",
+              "width": 48,
+              "height": 36
+            },
+            "large": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/GJNpzZc3S1dFzxobABI4Jg/zOLSdhayyfZq6WILscwf6po_xG_5sxDKXi8jQCU2tdp4uvcMaDKTW9BNv84gMbJ4fFG2BlDBgqkOz7i3P5610B996c0A3NEjWHCa2AX7M5ZoSnRKmhCMczZo86YfzimDWiStObmQ_t-a8jkxkUAjRQ/W_dehhrqbMLcaOHD7JLPEuJj6kBwRPJ4P0xy2fqflQE",
+              "width": 683,
+              "height": 512
+            },
+            "full": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/x_HLA_gVX5tE1eZ5I7_PhQ/kjVjMpgmXZM8Kf1ArP6-Y7WfW1u5rxQro0_Y50eXtf1PTmWR0zn5UAs7zOnlOI3B2e4GTbVHntmwyEBiAq0O3J6BnF_jN4X6BuNKl58yo6n9pF2hnszzj-mbGpUs8J43zExPhaHb07eraorKAGtoCg/2ZmA0VPhI5GPLM9BD7WzcaBUiHvNZy-jEn0V4XWPnQc",
+              "width": 3000,
+              "height": 2250
+            }
+          },
+          "localPath": "data/uploads/attTWDTpcKvjkwicR-anadolusofrasi.jpg"
+        }
+      ]
+    }
+  },
+  {
+    "id": "recTXssLYgKvTdxPH",
+    "createdTime": "2026-09-06T21:42:13.000Z",
+    "fields": {
+      "Durum": "Onaylandı",
+      "BaslangicTarihi": "2026-09-06",
+      "Kategori": "Market",
+      "Aciklama": "5 litre ayçiçek yağında %20 indirim. Stoklarla sınırlıdır.",
+      "Baslik": "Ayçiçek Yağı 5L'de %20 İndirim",
+      "IsletmeAdi": "Yılmaz Market",
+      "BitisTarihi": "2026-09-20",
+      "Prospektus": [
+        {
+          "id": "attzSBWTEzy7aIe1G",
+          "width": 447,
+          "height": 447,
+          "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/LOuw15162_sya6KiPh7gaQ/nt28PwuvttWkiQ5SmdP3VSnX6ZNERc4A8Eeqrs5ItPvsgSmTk1fZAH0RHllIVRAtYDrA9x7kMa49bNqcGomkAnVePx_vB4rU5wI7bOaEkhpYb521QnP6XyA7aHLmW9mmzFhzghIX66ctLzgt376uDf7Hb6WWMebKrxRPkemta4o/W12r0MMpIFb06eR95SyN6XzSoeO_i-bbEvUM5YmwMmw",
+          "filename": "yilmazMarket.jpeg",
+          "size": 35913,
+          "type": "image/jpeg",
+          "thumbnails": {
+            "small": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/wLxth28JJHRSZom7rSCTxw/Ex4FkvP-qPIZRBuv-7amE2oCsOy0fO-44H2e6WsllX4dOWWhim-hFb39M6LUxH-tJDuT4RRHIKkKfXkS8L5QPXs5MfzyhINuw4-mmALZqqK_S2XOtPCcUqZnhthUVHJTjgav7siPUD_x6kFS4rMF3A/JBGq-QCflP3ZJ2gYL0M9VXgr_lhKImoCR0Gfs1OMRao",
+              "width": 36,
+              "height": 36
+            },
+            "large": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/morKrt7_aJq2MAxB7fJOBw/Ia3Aw4-ExJAmttU07SSQAz16dl6hsqRuyukdoLCU3aJ8FG5i0C164Id6vIRqAH8sSvlwVBh4lpKN8xaOwiWkh-fQznDdPAXhivTJyzQzZQjjtWrYk1r8ymvJwhYNlgdyboGmFHBXOZz7EkDLDXRhmQ/JrsvF6Gwapqi6U8O_kYyzoqCNKncL5TvHqnm2Idx_Yg",
+              "width": 447,
+              "height": 447
+            },
+            "full": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/9nAF35RazkQaCEs5gTOH1Q/witBBriOHMc-1rrPjIne2_TTvK47ZMHXPd-L7erSUWPO0hlei7QxlNmaXmQ4FW6xcJpQV1wNiUCGSL1go4hRDaPVfET4SXjD96REgQQllmKnRWDJACDKXjGo1QDIFTJ6czGv9dZfi2g0C33bG_PKJg/TQ5RRDn-zNtOkvSZHgTiv3hhHUCQ2q56qdQ0hTuGm3c",
+              "width": 447,
+              "height": 447
+            }
+          },
+          "localPath": "data/uploads/attzSBWTEzy7aIe1G-yilmazmarket.jpeg"
+        }
+      ]
+    }
+  },
+  {
+    "id": "recd4jI7DwqVmuOIi",
+    "createdTime": "2026-09-06T21:42:13.000Z",
+    "fields": {
+      "Durum": "Onaylandı",
+      "BaslangicTarihi": "2026-09-06",
+      "Kategori": "Düğün Salonu",
+      "Aciklama": "2027 sezonunda erken rezervasyon yaptıran çiftlere özel fiyat avantajı.",
+      "Baslik": "2027 Düğünlerinde Erken Rezervasyon",
+      "IsletmeAdi": "Bahar Düğün Salonu",
+      "BitisTarihi": "2026-12-31",
+      "Prospektus": [
+        {
+          "id": "att5q6jJ1suKdmuli",
+          "width": 515,
+          "height": 388,
+          "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/5r8GvddI7XL-MtBELPxovA/WXZabuYTLt3EQ3qVmeZE-KbWk-3kJbsWE9rSECZkgJYfgaiTXgl-HiQ7ftVeKPVX63ktztZxW7P950ySsxOLY1voIMLEIekNbsjIIB_YmTzJjV0q6773mxbIOlGjBgymDVXQDKQfwyYnfN8WLOymdwWK7dfxcnCJf1U28Mrjn7c/gYje6oHsC2zBHdDTn0r_24THv1Fz-0QvVrPRpgFLqPI",
+          "filename": "baharDugunSalaonu.jpeg",
+          "size": 35528,
+          "type": "image/jpeg",
+          "thumbnails": {
+            "small": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/0XTj4TqLid-w71TyG6Dh0A/0bQHYzXGyvTSv9eKNHGHmCbwq4bpe-N3aIxrC573Ntpcz1H9K1S8wE07Ged2tw3wGmd74OSpDtfJ36melv4jJiHI3yeaLjk2iqSuPobDJLJ5SeG2iZ43wYmQthi61Ah6XAKYdl6IjQ-ngnOoIddRnQ/xZgLkjV7yuFGKmNy01IT6lXHTXc-cSYfJI44XV_AKkk",
+              "width": 48,
+              "height": 36
+            },
+            "large": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/0aahAV-kLnsm4miR-31hdg/yUnrdmUf43uM6u_9zcJVn63lT2PZnpaUkMbl2qO7gR8DqI2xx5bZoNYXMmPeKa5uVlSoT6BQVPgU3zMpcvqH5lUBLEy9l9IbdjwebUlTk77r2g0W8w31FJAPXA1mwnw7NZRXFbo5kEWmxGHqZVVZRw/c70yBz_ZjO-7KdFkM4ILfHk28aQq7WXCOGcuVfEW66Y",
+              "width": 515,
+              "height": 388
+            },
+            "full": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788746400000/4BimJX9pPzvSq01jEf1iEg/AwwqhME1uezrMw-CJdofxfvdwZ_WyLww3z0fQgJWpeD-rZf_-FFMWGRycHZZgkXzEPA_lhD2WW4N-tzpI852vlO2YuiK6LD36BNlHM2NPo8K1SMs2ZEL39mgx05C-PzMZHeerIHK1clnXlg57qIJpA/kDJ4w2YK7_Sy_F8dxrMeS9kcVvxs_7xueHmt0BeKEh4",
+              "width": 515,
+              "height": 388
+            }
+          },
+          "localPath": "data/uploads/att5q6jJ1suKdmuli-bahardugunsalaonu.jpeg"
+        }
+      ]
+    }
+  }
+]
