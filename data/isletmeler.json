@@ -80,7 +80,36 @@
     "id": "recpww9snAv7MxjCc",
     "createdTime": "2026-09-04T19:51:53.000Z",
     "fields": {
-      "Ad": "Saray Düğün Salonu",
+      "Gorsel": [
+        {
+          "id": "attjGlbjVqlzeEMQF",
+          "width": 1200,
+          "height": 600,
+          "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788861600000/ZnvcBlAQak7XCtz0IJeJZw/SEoBM7rk_GxXTIFmpn22SZSsTq4QRV3RtjCkvP0wME2a3yQ0QKSSSmOgnCr7KaKg6HP0AdJUXFgk4ZfhuST_fPIYD5gsXUhNAuB6T9lIVISSNRuIHMAXHLhKQDyrctbiabpM6i4kP20zx6TfSceKLw/-DcykNhDkAAWyAdhnRU_o9fErkEbHM3govnU3zFq8rQ",
+          "filename": "gold1.jpg",
+          "size": 67257,
+          "type": "image/jpeg",
+          "thumbnails": {
+            "small": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788861600000/GiST--abi69hXG4Dqs4TIg/LPeUI9Nai5a5d5WcGRQqoQ9uPibGr64SFxQ7yregeZjWcFk3ypze7qEszd6w3lN0WBaDC9521zvEDnqk3lL3-02KiBN1IhiANMUndzZy9faVPCJqp3R-NHaeCqTzP_b-t4nAvd02u0FcElmUbH6IBw/aUILFBvR--DHzjnwb3kUwDOX7zAWPwkaXqlS4kYG9IA",
+              "width": 72,
+              "height": 36
+            },
+            "large": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788861600000/W6AuNQ-y-Apc-fTUZZCzSQ/Js3CYe-CCsVrvKc4W6sgzhcQjw1Mbp4zX7DCq3M_n2z45ilXdpQ17lRZNYzeJrXEmmWAIKSCkDwFZgONNPw1jf6oDPygEY83HXQVUdXZ3c387TGMrPrtibKyqdfnsX4mfjNFhfCJbco6th2tcTUtiQ/qLYU0bMeP1aoDMfJFA5lAiQA_VfJqodVs57gxKQm3bs",
+              "width": 1024,
+              "height": 512
+            },
+            "full": {
+              "url": "https://v5.airtableusercontent.com/v3/u/57/57/1788861600000/LLaXIi5u4Xc-V94vfK3_eg/Uf2Qc2MHFCQ6vUNE9SQOJZOGPy6UqK3g0HK_DKGJHE3WWteZRAQufF3OJxY6J5lJNVgXKQJEqoZFahBscgLf4AQJmSbX-2VVhU04ktMM5ac8Bhl-YrNEKK33rZIXiUMYHnpNyPClHnYIhug-T8Ms9w/n7c_v-gPMRMRsM-AcVVb2gBJwtP-7Z-Ig0-6jTizcHQ",
+              "width": 1200,
+              "height": 600
+            }
+          },
+          "localPath": "data/uploads/attjGlbjVqlzeEMQF-gold1.jpg"
+        }
+      ],
+      "Ad": "Gold Düğün Salonu",
       "YorumSayisi": 86,
       "HaritaLinki": "https://maps.app.goo.gl/9bLMawUwocCy8HhL9",
       "Telefon": "49409998877",
